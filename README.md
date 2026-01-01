@@ -4,18 +4,40 @@ It is designed for learning, experimentation, and embedded projects involving ph
 
 ### ✨ Features
 - Converts dot (.) and dash (-) button presses into characters
-- Supports space input to separate characters
-- Includes back/delete functionality
-- Outputs decoded text strings
-- Lightweight and easy to integrate into Arduino projects
-  
+- Uses space input to mark the end of a character
+- Optinal back/delete functionality
+- Outputs decoded text as a String
+- Simple API, no external dependencies
+- Lightweight and easy to integrate into any Arduino project
+- No dynamic memory allocation
+- No external dependencies
 ##
+
+📁 Library Structure
+
+```
+SimpleMorse/
+├── examples/
+│   └── bare/
+│       └── bare.ino
+├── src/
+│   ├── SimpleMorse.h
+│   └── SimpleMorse.cpp
+├── library.properties
+├── library.json
+├── LICENSE
+└── README.md
+```
+##
+
 ### 🔧 Installation
 <b>Option 1: Arduino IDE (Manual)</b>
 
 - Download or clone this repository:
-- git clone https://github.com/HimanshuChauragade/SimpleMorse.git
-- Copy the SimpleMorse folder into your Arduino libraries directory.
+```bash
+git clone https://github.com/HimanshuChauragade/SimpleMorse.git
+```
+- Copy the 'SimpleMorse' folder into your Arduino 'libraries' directory.
 - Restart the Arduino IDE.
 
 <b>Option 2: ZIP Import</b>
@@ -24,16 +46,24 @@ It is designed for learning, experimentation, and embedded projects involving ph
 - Go to Sketch → Include Library → Add .ZIP Library
 - Select the downloaded ZIP file.
 
+<b>Option 3: Arduino IDE Library Manager (Not yet published)</b>
+- Open Arduino IDE
+- Go to Sketch → Include Library → Manage Libraries...
+- Search "SimpleMorse", select and install
+
 ### 🚀 Usage
 - <b>Include the Library: </b>
-  #include <SimpleMorse.h>
-
+```c++
+#include <SimpleMorse.h>
+```
 - <b>Create an Object: </b>
+```c++
   SimpleMorse morse(dashPin, dotPin, spacePin, backPin); //backPin is optional
+```
 
 <b>Example Sketch</b>
 - A minimal working example is provided in:
-  examples/bare/bare.ino
+  'examples/bare/bare.ino'
 
 
 This example demonstrates:
@@ -42,7 +72,7 @@ This example demonstrates:
 - Output via Serial Monitor
 - Button Mapping Concept
   
-<b>Button	Function<b>
+<b>Button	Function</b>
 - Dot(.): input
 - Dash(-): input
 - Space:	End of character
@@ -53,7 +83,7 @@ This example demonstrates:
 ### 📚 Supported Characters
 - Letters A–Z
 - Numbers 0–9
-- Defined internally using a Morse lookup table. Could be easily modified to map custom characters to the morse input
+Characters are defined internally using a Morse lookup table, which can be easily extended or customized.
 
 ##
 
