@@ -1,0 +1,29 @@
+{
+  "name": "SimpleMorse",
+  "version": "1.0.0",
+  "description": "A library that converts simplified Morse code button input (dot, dash, space) into text and ASCII.",
+  "keywords": [
+    "morse",
+    "morse-code",
+    "button",
+    "input",
+    "decoder",
+    "communication",
+    "wireless-communication",
+    "data-processing"
+  ],
+  "authors": [
+    {
+      "name": "Himanshu Chauragade",
+      "email": "himanshu.chauragade@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HimanshuChauragade/SimpleMorse"
+  },
+  "license": "MIT",
+  "frameworks": ["arduino"],
+  "platforms": "*"
+}

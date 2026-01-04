@@ -129,4 +129,3 @@ void SimpleMorse::clear()
     textBuffer = "";
     symbolBuffer = "";
 }
-
