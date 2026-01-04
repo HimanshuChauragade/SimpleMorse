@@ -1,16 +1,32 @@
+/*
+  SimpleMorse Library Example Sketch
+  Demonstrates how to use the SimpleMorse library with
+  push buttons. Internal pull-up resistors are used by default.
+
+  Button Wiring:
+  - One terminal of each push button goes to the Arduino pin
+  - The other terminal goes to GND
+  - Pins are configured with INPUT_PULLUP
+*/
+
 #include "SimpleMorse.h"
 
-SimpleMorse morse(11, 10, 9, 8);
+#define DASH_PIN   11   // Dash ( - )
+#define DOT_PIN    10   // Dot  ( . )
+#define SPACE_PIN   9   // Space
+#define BACK_PIN    8   // Backspace (Optional)
 
-// SimpleMorse morse(11, 10, 9);
+// Create SimpleMorse object
+SimpleMorse morse(DASH_PIN, DOT_PIN, SPACE_PIN, BACK_PIN);
 
-void setup()
-{
-    Serial.begin(9600);
-    morse.begin();
+void setup() {
+  Serial.begin(9600);
+  morse.begin();
 }
 
-void loop()
-{
-    morse.update();
+void loop() {
+
+  // Process button input and update buffers
+  morse.update();
+
 }
