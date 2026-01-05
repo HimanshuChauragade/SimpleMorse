@@ -89,7 +89,7 @@ void SimpleMorse::update()
     {
         if (tone == ' ')
         {
-            char symbol = decodeSymbol();
+            char symbol = searchSymbol();
 
             if (symbol != (char)0)
             {
