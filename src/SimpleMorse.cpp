@@ -30,7 +30,7 @@ void SimpleMorse::read()
     dashState = digitalRead(dashPin);
     dotState = digitalRead(dotPin);
     spaceState = digitalRead(spacePin);
-    backButtonState = digitalRead(backPin);
+    backState = digitalRead(backPin);
 }
 
 void SimpleMorse::print_details()
@@ -63,15 +63,7 @@ void SimpleMorse::backspace()
 {
     if (textBuffer.length() > 0)
         textBuffer.remove(textBuffer.length() - 1, 1);
-}
-
-void SimpleMorse::back_butt_check()
-{
-    if (backButtonState == 0)
-    {
-        backspace();
-        delay(50);
-    }
+    print_details();
 }
 
 void SimpleMorse::update_butt_state()
@@ -79,6 +71,7 @@ void SimpleMorse::update_butt_state()
     dashLastState = dashState;  //Updating the state of buttons
     dotLastState = dotState;
     spaceLastState = spaceState;
+    backLastState = backState;
 }
 
 void SimpleMorse::instructions_check()
@@ -122,11 +115,11 @@ void SimpleMorse::update()
                 symbolBuffer = (String)tone;
         }
         change = true;
+        
         // print_details(); 
         //Uncomment if need to print the input info by default
     }
 
-    back_butt_check();
     update_butt_state();
 }
 
@@ -138,6 +131,11 @@ char SimpleMorse::getInput()
         return '.';
     if (!spaceState && spaceLastState)
         return ' ';
+    if (!backState && backLastState)
+    {
+        backspace();
+        change = true;
+    }
     return (char)0;
 }
 
