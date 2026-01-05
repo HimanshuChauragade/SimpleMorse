@@ -36,20 +36,28 @@ private:
       { "--...","7" }, { "---..","8" }, { "----.","9" }
     };
 
-    char getInput();
-    char decodeSymbol();
-    void leastPriorityCheck();
-
 public:
     SimpleMorse(int dashPin, int dotPin, int spacePin, int backPin);
     SimpleMorse(int dashPin, int dotPin, int spacePin);
 
     void begin();
+    void read();
+    void print_details();
+    void clear();
+    void backspace();
+    void back_butt_check();
+    void update_butt_state();
+    void instructions_check();
     void update();
 
+    char getInput();
+    char searchSymbol();
+
     String getText();
-    String getCurrentSymbol();
-    void clear();
+    String getSymbol();
+    
+    bool available = false;
+
 };
 
 #endif
