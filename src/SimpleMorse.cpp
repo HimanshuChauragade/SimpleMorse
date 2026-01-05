@@ -25,45 +25,62 @@ void SimpleMorse::begin()
     }
 }
 
-char SimpleMorse::getInput()
-{
-    if (!dashState && dashLastState)
-        return '-';
-    if (!dotState && dotLastState)
-        return '.';
-    if (!spaceState && spaceLastState)
-        return ' ';
-    return (char)0;
-}
-
-char SimpleMorse::decodeSymbol()
-{
-    if (symbolBuffer == "")
-        return ' ';
-
-    for (int i = 0; i < 36; i++)
-        if (symbolBuffer == symbolsAlphabet[i][0])
-            return symbolsAlphabet[i][1][0];
-
-    return (char)0;
-}
-
-void SimpleMorse::leastPriorityCheck()
-{
-    if (symbolBuffer == "......")
-        if (textBuffer.length() > 0)
-            textBuffer.remove(textBuffer.length() - 1, 1);
-
-    if (symbolBuffer == "------")
-        textBuffer = "";
-}
-
-void SimpleMorse::update()
+void SimpleMorse::read()
 {
     dashState = digitalRead(dashPin);
     dotState = digitalRead(dotPin);
     spaceState = digitalRead(spacePin);
     backButtonState = digitalRead(backPin);
+}
+
+void SimpleMorse::print_details()
+{
+    Serial.print("textBuffer:  ");
+    Serial.println(textBuffer);
+    Serial.print("symbolBuffer:  ");
+    Serial.println(symbolBuffer);
+}
+
+void SimpleMorse::clear()
+{
+    textBuffer = "";
+    symbolBuffer = "";
+}
+
+void SimpleMorse::backspace()
+{
+    if (textBuffer.length() > 0)
+        textBuffer.remove(textBuffer.length() - 1, 1);
+}
+
+void SimpleMorse::back_butt_check()
+{
+    if (backButtonState == 0)
+    {
+        backspace();
+        delay(50);
+    }
+}
+
+void SimpleMorse::update_butt_state()
+{
+    dashLastState = dashState;  //Updating the state of buttons
+    dotLastState = dotState;
+    spaceLastState = spaceState;
+}
+
+void SimpleMorse::instructions_check()
+{
+    if (symbolBuffer == "......")
+        backspace();
+
+    if (symbolBuffer == "------")
+        clear();
+}
+
+void SimpleMorse::update()
+{
+    read();
 
     char tone = getInput();
     delay(50);
@@ -77,41 +94,49 @@ void SimpleMorse::update()
             if (symbol != (char)0)
             {
                 textBuffer += symbol;
-                if (textBuffer.length() > 16)
+                if (textBuffer.length() > 16) // max sting length
                     textBuffer = (String)symbol;
             }
             else
-            {
-                leastPriorityCheck();
-            }
-            symbolBuffer = "";
+                instructions_check();
+
+            symbolBuffer = ""; // resetting variable
         }
         else
         {
             symbolBuffer += tone;
-            if (symbolBuffer.length() > 6)
+            if (symbolBuffer.length() > 6) // max symbol buffer length
                 symbolBuffer = (String)tone;
         }
 
-        Serial.print("textBuffer:  ");
-        Serial.println(textBuffer);
-        Serial.print("symbolBuffer:  ");
-        Serial.println(symbolBuffer);
+        print_details();
     }
 
-    if (backButtonState == 0)
-    {
-        if (textBuffer.length() > 0)
-            textBuffer.remove(textBuffer.length() - 1, 1);
+    back_butt_check();
+    update_butt_state();
+}
 
-        Serial.print("textBuffer:  ");
-        Serial.println(textBuffer);
-        delay(50);
-    }
+char SimpleMorse::getInput()
+{
+    if (!dashState && dashLastState)
+        return '-';
+    if (!dotState && dotLastState)
+        return '.';
+    if (!spaceState && spaceLastState)
+        return ' ';
+    return (char)0;
+}
 
-    dashLastState = dashState;
-    dotLastState = dotState;
-    spaceLastState = spaceState;
+char SimpleMorse::searchSymbol() // Looks for the Alpha-numeric character associated with the morse input
+{
+    if (symbolBuffer == "")
+        return ' ';
+
+    for (int i = 0; i < 36; i++)
+        if (symbolBuffer == symbolsAlphabet[i][0])
+            return symbolsAlphabet[i][1][0];
+
+    return (char)0;
 }
 
 String SimpleMorse::getText()
@@ -119,13 +144,7 @@ String SimpleMorse::getText()
     return textBuffer;
 }
 
-String SimpleMorse::getCurrentSymbol()
+String SimpleMorse::getSymbol()
 {
     return symbolBuffer;
-}
-
-void SimpleMorse::clear()
-{
-    textBuffer = "";
-    symbolBuffer = "";
 }
