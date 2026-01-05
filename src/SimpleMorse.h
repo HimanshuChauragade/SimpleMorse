@@ -22,6 +22,9 @@ private:
     String symbolBuffer;
     String textBuffer;
 
+    bool available = false;
+    bool change = false;
+
     String symbolsAlphabet[36][2] =
     {
       { ".-","A" }, { "-...","B" }, { "-.-.","C" }, { "-..","D" },
@@ -43,6 +46,7 @@ public:
     void begin();
     void read();
     void print_details();
+    void spit_info();
     void clear();
     void backspace();
     void back_butt_check();
@@ -50,13 +54,13 @@ public:
     void instructions_check();
     void update();
 
+    bool stateChange();
+
     char getInput();
     char searchSymbol();
 
     String getText();
     String getSymbol();
-    
-    bool available = false;
 
 };
 

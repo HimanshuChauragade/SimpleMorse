@@ -29,4 +29,12 @@ void loop() {
   // Process button input and update buffers
   morse.update();
 
+  // Look for change in input and print the data
+  if (morse.stateChange() != false){
+    Serial.print("textBuffer:  ");
+    Serial.println(morse.getText());
+    Serial.print("symbolBuffer:  ");
+    Serial.println(morse.getSymbol());
+  }
+
 }

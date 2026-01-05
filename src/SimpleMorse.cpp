@@ -41,6 +41,18 @@ void SimpleMorse::print_details()
     Serial.println(symbolBuffer);
 }
 
+void SimpleMorse::spit_info()
+{
+    Serial.print("dashPin: ");
+    Serial.println(dashPin);
+    Serial.print("dotPin: ");
+    Serial.println(dotPin);
+    Serial.print("spacePin: ");
+    Serial.println(spacePin);
+    Serial.print("backPin: ");
+    Serial.println(backPin);
+}
+
 void SimpleMorse::clear()
 {
     textBuffer = "";
@@ -80,6 +92,7 @@ void SimpleMorse::instructions_check()
 
 void SimpleMorse::update()
 {
+    change = false;
     read();
 
     char tone = getInput();
@@ -108,8 +121,9 @@ void SimpleMorse::update()
             if (symbolBuffer.length() > 6) // max symbol buffer length
                 symbolBuffer = (String)tone;
         }
-
-        print_details();
+        change = true;
+        // print_details(); 
+        //Uncomment if need to print the input info by default
     }
 
     back_butt_check();
@@ -147,4 +161,9 @@ String SimpleMorse::getText()
 String SimpleMorse::getSymbol()
 {
     return symbolBuffer;
+}
+
+bool SimpleMorse::stateChange()
+{
+    return change;
 }
