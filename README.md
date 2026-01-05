@@ -18,8 +18,10 @@ It is designed for learning, experimentation, and embedded projects involving ph
 ```
 SimpleMorse/
 ├── examples/
-│   └── bare/
-│       └── bare.ino
+│   ├── bare/
+│   |   └── bare.ino
+│   └── bare_with_lcd/
+│       └── bare_with_lcd.ino
 ├── src/
 │   ├── SimpleMorse.h
 │   └── SimpleMorse.cpp
@@ -51,6 +53,8 @@ git clone https://github.com/HimanshuChauragade/SimpleMorse.git
 - Go to Sketch → Include Library → Manage Libraries...
 - Search "SimpleMorse", select and install
 
+##
+
 ### 🚀 Usage
 - <b>Include the Library: </b>
 ```c++
@@ -60,19 +64,45 @@ git clone https://github.com/HimanshuChauragade/SimpleMorse.git
 ```c++
   SimpleMorse morse(dashPin, dotPin, spacePin, backPin); //backPin is optional
 ```
+- <b>Process button input and update buffers: </b>
+```c++
+  morse.begin();
+  morse.update();
+```
+- <b>Look for change in input and print the data: </b>
+```c++
+  if (morse.stateChange() != false){
+    Serial.print("textBuffer:  ");
+    Serial.println(morse.getText());
+    Serial.print("symbolBuffer:  ");
+    Serial.println(morse.getSymbol());
+  }
+```
+##
 
-<b>Example Sketch</b>
-- A minimal working example is provided in:
-  'examples/bare/bare.ino'
-
+### 📘 Examples
+`bare.ino` - **Serial Monitor Example**
 
 This example demonstrates:
 - Button-based Morse input
-- Real-time decoding
+- Real-time character decoding
 - Output via Serial Monitor
-- Button Mapping Concept
+- Button-to-function mapping
+
+##
+`bare_with_lcd.ino` - **LCD Output Example**
+This example demonstrates:
+- Displaying decoded text on a 16*2 I2C LCD Desplay
+- Simultaneous Serial + LCD output
   
-<b>Button	Function</b>
+Use this example if you want:
+- Visual feedback without a PC
+- Standalone Morse decoder projects
+- Integration with LCD-based embedded systems
+  
+##
+
+### 🔘 Button	Function
 - Dot(.): input
 - Dash(-): input
 - Space:	End of character
