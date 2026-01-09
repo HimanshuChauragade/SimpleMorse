@@ -17,15 +17,15 @@ It is designed for learning, experimentation, and embedded projects involving ph
 
 ```
 SimpleMorse/
-├── examples/
+├── examples/              # Example sketches showing library usage
 │   ├── bare/
 │   |   └── bare.ino
 │   └── bare_with_lcd/
 │       └── bare_with_lcd.ino
-├── src/
+├── src/                   # Source code files
 │   ├── SimpleMorse.h
 │   └── SimpleMorse.cpp
-├── library.properties
+├── library.properties     # Library information and metadata
 ├── library.json
 ├── LICENSE
 └── README.md
